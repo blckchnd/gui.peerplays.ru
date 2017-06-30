@@ -104,7 +104,10 @@
                     showError('Invalid username or password');
                     break;
                 case codes.CONNECTION_ERROR:
-                    showError('Invalid username or password');
+                    showError('Cannot connect to blockchain');
+                    break;
+                case codes.BROADCAST_ERROR:
+                    showError('Cannot broadcast transaction. Check if your balance is positive. You should have >= 0.002 PPY.');
                     break;
                 case codes.MEMO_IS_OK:
                     showInfo('Your account is already fixed');
