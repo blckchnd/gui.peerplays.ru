@@ -1,0 +1,11 @@
+body {
+    padding: 10px;
+}
+
+.highlight {
+    font-weight: bold;
+}
+
+#successLabel, #warnLabel, #errorLabel, #infoLabel {
+    display: none;
+}

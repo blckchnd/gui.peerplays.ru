@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memo Reset</title>
+
+    <link rel='stylesheet prefetch' href='css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='css/main.css'>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>MEMO Reset</h2>
+
+    <div id="infoLabel" class="alert alert-info">
+        Some information
+    </div>
+    <div id="successLabel" class="alert alert-success">
+        MEMO was reset successfully
+    </div>
+    <div id="warnLabel" class="alert alert-warning">
+        Please fill all fields
+    </div>
+    <div id="errorLabel" class="alert alert-danger">
+        Something is wrong
+    </div>
+
+    <form class="form-horizontal" id="mainForm">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account">Account:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="account" placeholder="Peerplays account" name="account">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="pwd">Password:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-danger" id="btn">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/memo.js"></script>
+<script type="text/javascript">
+
+    var resetLabels = function () {
+        $('#infoLabel').hide();
+        $('#successLabel').hide();
+        $('#warnLabel').hide();
+        $('#errorLabel').hide();
+    };
+
+    var showInfo = function (msg) {
+        $('#infoLabel').text(msg);
+        $('#infoLabel').show();
+    };
+
+    var showSuccess = function (msg) {
+        $('#successLabel').text(msg);
+        $('#successLabel').show();
+    };
+
+    var showWarning = function (msg) {
+        $('#warnLabel').text(msg);
+        $('#warnLabel').show();
+    };
+
+    var showError = function (msg) {
+        $('#errorLabel').text(msg);
+        $('#errorLabel').show();
+    };
+
+    // RSA
+    $('#btn').click(function () {
+
+        resetLabels();
+
+        var account = $('#account').val();
+        var password = $('#pwd').val();
+
+        if (!password || !account) {
+            showWarning('Please input account name and password');
+            return;
+        }
+
+        window.Memo.reset(account, password).then(function (res) {
+            showSuccess('Account is fixed.');
+            $('#mainForm').hide();
+        }).catch(function (e) {
+            console.log('Error:', e)
+            var codes = window.Memo.error_codes;
+            switch (e.code) {
+                case codes.UNKNOWN_ACCOUNT:
+                    showError('Unknown account');
+                    break;
+                case codes.BAD_CREDENTIALS:
+                    showError('Invalid username or password');
+                    break;
+                case codes.CONNECTION_ERROR:
+                    showError('Invalid username or password');
+                    break;
+                case codes.MEMO_IS_OK:
+                    showInfo('Your account is already fixed');
+                    break;
+                default:
+                    showInfo('Unknown error');
+                    break;
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>
