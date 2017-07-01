@@ -39,6 +39,16 @@
 <script type="text/javascript" src="js/memo.js"></script>
 <script type="text/javascript">
 
+    $(document).ready(function() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                process();
+                return false;
+            }
+        });
+    });
+
     var resetLabels = function () {
         $('#successLabel').hide();
         $('#errorLabel').hide();
@@ -57,6 +67,10 @@
     // RSA
     $('#btn').click(function () {
 
+        process();
+    });
+
+    var process = function() {
         resetLabels();
 
         var account = $('#account').val();
@@ -72,9 +86,9 @@
             else
                 showError('Your account has issue with memo.');
         }).catch(function (e) {
-                    showError('Unknown error');
+            showError('Unknown error');
         });
-    });
+    }
 
 
 </script>
