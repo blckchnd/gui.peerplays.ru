@@ -73,7 +73,7 @@
     var process = function() {
         resetLabels();
 
-        var account = $('#account').val();
+        var account = $('#account').val().toLowerCase();
 
         if (!account) {
             showError('Please input account name and password');

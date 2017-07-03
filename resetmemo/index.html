@@ -95,7 +95,7 @@
     var process = function () {
         resetLabels();
 
-        var account = $('#account').val();
+        var account = $('#account').val().toLowerCase();
         var password = $('#pwd').val();
 
         if (!password || !account) {
